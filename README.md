@@ -110,3 +110,4 @@ Backend (JSON responses with bounding boxes)
 - Consider running on a machine with more RAM
 - Use CPU mode (automatic fallback in app.py)
 # Road_Guard
+# Road_Guard
