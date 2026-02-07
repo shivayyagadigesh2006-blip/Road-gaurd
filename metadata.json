@@ -1,0 +1,8 @@
+{
+  "name": "RoadGuard AI: Intelligent Road Condition Monitoring",
+  "description": "A high-performance monitoring system that leverages AI to detect road damage, classify severity, and manage repair workflows for civil infrastructure.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}

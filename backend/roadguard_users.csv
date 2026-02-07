@@ -1,0 +1,11 @@
+id,username,email,password,role,department
+u1,Citizen_One,user@gmail.com,password123,USER,
+a1,System_Admin,admin@gmail.com,adminpassword,ADMIN,
+gegl25si2,krish,krish@gmail.com,pass123,USER,
+1oezrgsdp,chin,chin@gmail.com,pass123,CORPORATION,
+f1xflh6wf,krish,krish1@gmail.com,pass123,USER,
+d1,Roads_Department,roads@gov.in,password123,CORPORATION,ROADS
+d2,Drainage_Department,water@gov.in,password123,CORPORATION,DRAINAGE
+d3,Traffic_Department,traffic@gov.in,password123,CORPORATION,TRAFFIC
+c1,Roads_Contractor_A,contractor_roads@gmail.com,password123,CONTRACTOR,ROADS
+c2,Drainage_Contractor_B,contractor_water@gmail.com,password123,CONTRACTOR,DRAINAGE
