@@ -17,10 +17,17 @@ import warnings
 import database
 warnings.filterwarnings('ignore')
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024 # 100MB Limit
 database.init_db()
 CORS(app)
+
+# Explicitly serve static files for Render/Gunicorn
+from flask import send_from_directory
+@app.route('/static/<path:path>')
+def send_static(path):
+    print(f"[DEBUG] Serving static file: {path}")
+    return send_from_directory('static', path)
 
 import logging
 logging.basicConfig(filename='backend_error.log', level=logging.DEBUG, 
