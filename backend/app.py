@@ -616,6 +616,8 @@ def analyze_video():
         import uuid
         file_id = str(uuid.uuid4())
         
+        import gc
+        
         # Save Original Video
         original_filename = f"{file_id}.mp4"
         original_path = os.path.join(ORIGINAL_VIDEO_FOLDER, original_filename)
@@ -624,6 +626,11 @@ def analyze_video():
             f.write(video_bytes)
             
         print(f"[DEBUG] Video saved to {original_path}")
+        
+        # FREE MEMORY IMMEDIATELY
+        del video_bytes
+        del video_data
+        gc.collect()
         
         # Verify file size
         if os.path.getsize(original_path) == 0:
@@ -752,6 +759,9 @@ def analyze_video():
             if out_writer:
                 out_writer.write(frame)
                         
+            if frame_count % 30 == 0:
+                gc.collect()
+
             frame_count += 1
             
         cap.release()

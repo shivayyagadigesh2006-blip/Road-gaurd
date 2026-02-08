@@ -4,9 +4,13 @@ services:
     env: python
     region: singapore
     buildCommand: pip install -r backend/requirements.txt
-    startCommand: gunicorn --chdir backend app:app --bind 0.0.0.0:$PORT
+    startCommand: gunicorn --chdir backend app:app --bind 0.0.0.0:$PORT --workers 1 --threads 2 --timeout 120
     envVars:
       - key: PORT
         value: 10000
       - key: PYTHON_VERSION
         value: 3.9.18
+      - key: MALLOC_ARENA_MAX
+        value: 2
+      - key: WEB_CONCURRENCY
+        value: 1
