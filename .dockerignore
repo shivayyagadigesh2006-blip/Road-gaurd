@@ -23,12 +23,27 @@ utils
 .idea
 .git
 .gitignore
+__pycache__
+venv
+.env
+.env.production
 
 # Exclude large media
 *.mp4
 *.mov
 *.avi
 *.mkv
+*.zip
+*.rar
+*.tar
+*.tar.gz
+
+# ML / datasets (very important)
+models/
+dataset/
+data/
+uploads/
+static/uploads/
 
 # Keep backend
 !backend
