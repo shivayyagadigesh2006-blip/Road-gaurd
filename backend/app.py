@@ -474,6 +474,14 @@ def analyze_image(image_input, image_height=1000, image_width=1000):
             "boundingBoxes": []
         }
 
+@app.route('/', methods=['GET'])
+def index():
+    return jsonify({
+        "status": "online",
+        "service": "RoadGuard AI Backend",
+        "endpoints": ["/health", "/analyze"]
+    })
+
 @app.route('/health', methods=['GET'])
 def health():
     """Health check endpoint"""
