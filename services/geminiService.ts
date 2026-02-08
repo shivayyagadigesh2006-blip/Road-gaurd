@@ -27,18 +27,38 @@ export class RoadAnalysisService {
 
       let response;
       try {
-        response = await fetch(endpoint, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            image: isVideo ? undefined : base64Data,
-            video: isVideo ? base64Data : undefined,
-            mimeType: mimeType
-          }),
-          signal: controller.signal
-        });
+        if (isVideo) {
+            // Use FormData for videos to avoid Base64 overhead (OOM fix)
+            const formData = new FormData();
+            // Convert base64 back to blob if it's already base64 (which it is from FileReader)
+            // But wait, FileReader gave us DataURL.
+            // Ideally we should pass the File object directly to this service. 
+            // BUT, to minimize changes, let's fetch the blob from the DataURL.
+            
+            const fetchBlob = await fetch(base64Data);
+            const blob = await fetchBlob.blob();
+            formData.append('video', blob, 'video.mp4');
+            formData.append('mimeType', mimeType);
+
+            response = await fetch(endpoint, {
+                method: 'POST',
+                body: formData, // No Content-Type header needed (browser sets it with boundary)
+                signal: controller.signal
+            });
+        } else {
+            // Keep JSON for images (small enough)
+            response = await fetch(endpoint, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                image: base64Data,
+                mimeType: mimeType
+              }),
+              signal: controller.signal
+            });
+        }
       } finally {
         clearTimeout(timeoutId);
       }

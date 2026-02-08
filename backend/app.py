@@ -596,41 +596,59 @@ def analyze_video():
     Processes video frames to detect road damage
     """
     try:
-        data = request.json
-        if not data or 'video' not in data:
-            return jsonify({"error": "No video data provided"}), 400
+        # Check for multipart/form-data (File Upload) - Efficient
+        if 'video' in request.files:
+            file = request.files['video']
+            print(f"[DEBUG] Received file via multipart: {file.filename}")
             
-        print("[DEBUG] Starting video analysis...")
-        video_data = data['video']
-        # Remove header if present
-        if ',' in video_data:
-            video_data = video_data.split(',')[1]
+            # Generate UUID
+            import uuid
+            file_id = str(uuid.uuid4())
             
-        # Decode
-        try:
-            video_bytes = base64.b64decode(video_data)
-        except Exception as e:
-            return jsonify({"error": f"Invalid base64 video data: {str(e)}"}), 400
-        
-        # Generate UUID for filenames
-        import uuid
-        file_id = str(uuid.uuid4())
+            # Save directly
+            original_filename = f"{file_id}.mp4"
+            original_path = os.path.join(ORIGINAL_VIDEO_FOLDER, original_filename)
+            file.save(original_path)
+            
+            # No base64 decoding needed!
+            video_bytes = None 
+            video_data = None
+            
+        # Fallback to JSON (Legacy/Base64) - High Memory Usage
+        else:
+            data = request.json
+            if not data or 'video' not in data:
+                return jsonify({"error": "No video data provided"}), 400
+                
+            print("[DEBUG] Starting video analysis (Base64 mode)...")
+            video_data = data['video']
+            if ',' in video_data:
+                video_data = video_data.split(',')[1]
+                
+            try:
+                video_bytes = base64.b64decode(video_data)
+            except Exception as e:
+                return jsonify({"error": f"Invalid base64 video data: {str(e)}"}), 400
+            
+            # Generate UUID
+            import uuid
+            file_id = str(uuid.uuid4())
+            
+            # Save Original Video
+            original_filename = f"{file_id}.mp4"
+            original_path = os.path.join(ORIGINAL_VIDEO_FOLDER, original_filename)
+            
+            with open(original_path, "wb") as f:
+                f.write(video_bytes)
+                
+            # FREE MEMORY
+            del video_bytes
+            del video_data
         
         import gc
-        
-        # Save Original Video
-        original_filename = f"{file_id}.mp4"
-        original_path = os.path.join(ORIGINAL_VIDEO_FOLDER, original_filename)
-        
-        with open(original_path, "wb") as f:
-            f.write(video_bytes)
-            
-        print(f"[DEBUG] Video saved to {original_path}")
-        
-        # FREE MEMORY IMMEDIATELY
-        del video_bytes
-        del video_data
         gc.collect()
+        
+        print(f"[DEBUG] Video saved to {original_path}")
         
         # Verify file size
         if os.path.getsize(original_path) == 0:
