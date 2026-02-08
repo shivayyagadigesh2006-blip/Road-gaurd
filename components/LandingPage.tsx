@@ -89,13 +89,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onLogin, onWard
                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto relative z-10"> {/* Changed to 3 columns */}
                   {/* Citizen Card */}
                   <div className="group relative bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col animate-fade-up stagger-1 hover:-translate-y-2 h-full">
-                     <div className="h-48 overflow-hidden relative"> {/* Standardized Height */}
+                     <div className="h-48 overflow-hidden relative bg-orange-600"> {/* Added bg-orange-600 fallback */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
                         <img
-                           src="/assets/citizen_hero.png"
+                           src="/assets/citizen_reporting.png"
                            alt="Citizen Reporting"
-                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 bg-orange-600" /* Fallback bg */
-                           onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1584463673574-a70404a07677?auto=format&fit=crop&w=800&q=80'; }}
+                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 mixture-blend-overlay"
+                           onError={(e) => { (e.target as HTMLImageElement).classList.add('opacity-50'); }}
                         />
                         <div className="absolute bottom-6 left-6 z-20">
                            <span className="px-3 py-1 bg-[#EA580C]/90 backdrop-blur-sm text-white text-xs font-bold uppercase rounded mb-2 inline-block shadow-sm">Public Access</span>
@@ -120,13 +120,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onLogin, onWard
 
                   {/* Department Card */}
                   <div className="group relative bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col animate-fade-up stagger-2 hover:-translate-y-2 h-full">
-                     <div className="h-48 overflow-hidden relative"> {/* Standardized Height */}
+                     <div className="h-48 overflow-hidden relative bg-blue-900"> {/* Added bg-blue-900 fallback */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
                         <img
-                           src="/assets/dept_hero.png" // Ensure asset exists or styling handles it
+                           src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
                            alt="Department Portal"
-                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 bg-blue-900" /* Fallback bg */
-                           onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80'; }}
+                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 mixture-blend-overlay"
+                           onError={(e) => { (e.target as HTMLImageElement).classList.add('opacity-50'); }}
                         />
                         <div className="absolute bottom-6 left-6 z-20">
                            <span className="px-3 py-1 bg-[#1E3A8A]/90 backdrop-blur-sm text-white text-xs font-bold uppercase rounded mb-2 inline-block shadow-sm">Official Use Only</span>
@@ -152,13 +152,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onLogin, onWard
 
                   {/* Ward Card */}
                   <div className="group relative bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col animate-fade-up stagger-3 hover:-translate-y-2 h-full">
-                     <div className="h-48 overflow-hidden relative"> {/* Standardized Height */}
+                     <div className="h-48 overflow-hidden relative bg-green-700"> {/* Added bg-green-700 fallback */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent z-10"></div>
                         <img
-                           src="/assets/ward_hero.png" // Updated to local asset
+                           src="https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?ixlib=rb-1.2.1-auto&auto=format&fit=crop&w=800&q=80" 
                            alt="Ward Portal"
-                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 bg-green-700"
-                           onError={(e) => { (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1577962917302-cd874c4e31d2?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'; }}
+                           className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 mixture-blend-overlay"
+                           onError={(e) => { (e.target as HTMLImageElement).classList.add('opacity-50'); }}
                         />
                         <div className="absolute bottom-6 left-6 z-20">
                            <span className="px-3 py-1 bg-green-700/90 backdrop-blur-sm text-white text-xs font-bold uppercase rounded mb-2 inline-block shadow-sm">Local Authority</span>

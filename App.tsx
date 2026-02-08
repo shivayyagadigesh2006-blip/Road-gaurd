@@ -87,6 +87,7 @@ const App: React.FC = () => {
   const [userLocation, setUserLocation] = useState<{ lat: number, lng: number } | null>(null);
   const [imageLocation, setImageLocation] = useState<{ lat: number, lng: number } | null>(null);
   const [manualLocation, setManualLocation] = useState<{ lat: number, lng: number } | null>(null);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   // Voice Input State
   const [isListening, setIsListening] = useState(false);
@@ -297,7 +298,7 @@ const App: React.FC = () => {
       const timer = setTimeout(() => {
         setShowSplash(false);
         setShowLanding(true);
-      }, 2500);
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [currentUser]); // Reload reports when user changes (Login/Logout) to ensure fresh data (assignments etc)
@@ -381,11 +382,16 @@ const App: React.FC = () => {
       return;
     }
 
-    if (authMode === 'signup') {
-      if (!username.trim()) {
-        setError("Please enter a valid Name/ID.");
-        return;
-      }
+    setIsLoggingIn(true);
+    setError(null);
+
+    try {
+      if (authMode === 'signup') {
+        if (!username.trim()) {
+          setError("Please enter a valid Name/ID.");
+          setIsLoggingIn(false);
+          return;
+        }
 
       const role = loginType === 'CORPORATION' || loginType === 'WARD' ? UserRole.CORPORATION : (loginType === 'CONTRACTOR' ? UserRole.CONTRACTOR : UserRole.USER);
       const newUser: User = {
@@ -433,6 +439,11 @@ const App: React.FC = () => {
     } else {
       setError("Invalid credentials. Please try again.");
     }
+  } catch (err) {
+    setError("An unexpected error occurred.");
+  } finally {
+    setIsLoggingIn(false);
+  }
   };
 
 
@@ -654,8 +665,16 @@ const App: React.FC = () => {
                   </div>
                 )}
 
-                <button type="submit" className="w-full btn-govt-primary py-3">
-                  {authMode === 'login' ? 'Login' : 'Register Account'}
+                <button 
+                  type="submit" 
+                  disabled={isLoggingIn}
+                  className={`w-full btn-govt-primary py-3 flex justify-center items-center ${isLoggingIn ? 'opacity-70 cursor-not-allowed' : ''}`}
+                >
+                  {isLoggingIn ? (
+                    <div className="w-6 h-6 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    authMode === 'login' ? 'Login' : 'Register Account'
+                  )}
                 </button>
               </form>
 

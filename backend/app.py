@@ -639,31 +639,29 @@ def analyze_video():
             # Output FPS
             out_fps = fps
             
-            # 1. Try avc1 (H.264) - Best for browsers
-            out_writer = cv2.VideoWriter(output_path, fourcc, out_fps, (frame_width, frame_height))
+            # Windows/OpenCV often fails with avc1 without openh264 dll.
+            # We prioritize mp4v for backend stability, even if it means 
+            # some browsers might not play it natively (they often can play mp4v in .mp4 container though).
+            # OR we try avc1 inside a broad try/catch to avoid crashing the thread.
             
-            if not out_writer.isOpened():
-                print("[WARN] Failed to open VideoWriter with avc1. Trying h264...")
-                # 2. Try h264 (Alternative H.264 tag)
-                fourcc = cv2.VideoWriter_fourcc(*'h264')
-                out_writer = cv2.VideoWriter(output_path, fourcc, out_fps, (frame_width, frame_height))
-                
-                if not out_writer.isOpened():
-                    print("[WARN] Failed to open VideoWriter with h264. Trying mp4v...")
-                    # 3. Try mp4v (MPEG-4) - Widely supported by OpenCV, less by browsers
-                    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+            codecs_to_try = ['avc1', 'mp4v', 'h264']
+            
+            for codec in codecs_to_try:
+                try:
+                    fourcc = cv2.VideoWriter_fourcc(*codec)
                     out_writer = cv2.VideoWriter(output_path, fourcc, out_fps, (frame_width, frame_height))
-                    
-                    if not out_writer.isOpened():
-                        print("[ERROR] Failed to open VideoWriter with all codecs (avc1, h264, mp4v).")
-                        out_writer = None
-                    else:
-                         print("[INFO] Fallback to mp4v codec successful. Note: May not play in all browsers.")
-                else:
-                    print("[INFO] Fallback to h264 codec successful.")
-                
+                    if out_writer.isOpened():
+                        print(f"[INFO] Initialized VideoWriter with codec: {codec}")
+                        break
+                except Exception as e:
+                    print(f"[WARN] Failed to init codec {codec}: {e}")
+            
+            if not out_writer or not out_writer.isOpened():
+                 print("[ERROR] Failed to open VideoWriter with all codecs.")
+                 out_writer = None
+
         except Exception as e:
-            print(f"[ERROR] Failed to init VideoWriter: {e}")
+            print(f"[ERROR] Failed to init VideoWriter loop: {e}")
             out_writer = None
             
         frame_count = 0
