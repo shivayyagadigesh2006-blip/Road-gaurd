@@ -6,7 +6,7 @@ from pymongo.server_api import ServerApi
 import time
 
 # MongoDB Configuration
-MONGO_URI = "mongodb+srv://yogihiremath018_db_user:DRtMcwrP7apXds6u@cluster0.6nwbtcr.mongodb.net/?appName=Cluster0"
+MONGO_URI = os.environ.get("MONGO_URI", "mongodb+srv://yogihiremath018_db_user:DRtMcwrP7apXds6u@cluster0.6nwbtcr.mongodb.net/?appName=Cluster0")
 DB_NAME = "roadguard"
 
 def get_db():
