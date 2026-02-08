@@ -4,7 +4,7 @@ services:
     env: python
     region: singapore
     buildCommand: pip install -r backend/requirements.txt
-    startCommand: cd backend && gunicorn app:app --bind 0.0.0.0:$PORT
+    startCommand: gunicorn --chdir backend app:app --bind 0.0.0.0:$PORT
     envVars:
       - key: PORT
         value: 10000
