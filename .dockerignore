@@ -1,0 +1,34 @@
+# Exclude frontend dependencies
+node_modules
+dist
+build
+public
+components
+config
+contexts
+hooks
+pages
+services
+utils
+*.tsx
+*.ts
+*.css
+*.html
+*.json
+*.js
+
+# Exclude local dev files
+.env.local
+.vscode
+.idea
+.git
+.gitignore
+
+# Exclude large media
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# Keep backend
+!backend
