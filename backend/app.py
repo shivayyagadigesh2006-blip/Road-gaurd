@@ -15,6 +15,8 @@ try:
 except ImportError:
     print("[WARN] pillow-heif not installed, HEIC support disabled")
 import os
+import secrets
+import gc
 import warnings
 import database
 warnings.filterwarnings('ignore')
