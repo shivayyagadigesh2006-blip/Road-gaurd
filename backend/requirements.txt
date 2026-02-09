@@ -13,3 +13,4 @@ ultralytics>=8.0.0
 pymongo>=4.0.0
 pillow-heif>=0.13.0
 gunicorn
+cloudinary

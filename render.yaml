@@ -16,6 +16,12 @@ services:
         value: 1
       - key: YOLO_CONFIG_DIR
         value: /tmp
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
     disk:
       name: roadguard-uploads
       mountPath: /opt/render/project/src/backend/static/uploads

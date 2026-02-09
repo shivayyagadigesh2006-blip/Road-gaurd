@@ -594,6 +594,18 @@ for folder in [ORIGINAL_VIDEO_FOLDER, PROCESSED_VIDEO_FOLDER]:
 
 from flask_cors import CORS, cross_origin
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+# Cloudinary Config
+cloudinary.config(
+  cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME'),
+  api_key = os.getenv('CLOUDINARY_API_KEY'),
+  api_secret = os.getenv('CLOUDINARY_API_SECRET'),
+  secure = True
+)
+
 @app.route('/analyze/video', methods=['POST', 'OPTIONS'])
 @cross_origin()
 def analyze_video():
@@ -604,6 +616,11 @@ def analyze_video():
     Processes video frames to detect road damage
     """
     try:
+        original_media_url = None
+        original_path = None
+        file_id = None
+        original_filename = None
+
         # Check for multipart/form-data (File Upload) - Efficient
         if 'video' in request.files:
             file = request.files['video']
@@ -613,48 +630,36 @@ def analyze_video():
             import uuid
             file_id = str(uuid.uuid4())
             
-            # Save directly
+            # Save directly (Temp)
             original_filename = f"{file_id}.mp4"
             original_path = os.path.join(ORIGINAL_VIDEO_FOLDER, original_filename)
             file.save(original_path)
+            
+            # --- CLOUDINARY UPLOAD ---
+            print("[DEBUG] Uploading to Cloudinary...")
+            try:
+                upload_result = cloudinary.uploader.upload_large(
+                    original_path, 
+                    resource_type="video",
+                    public_id=f"roadguard/original/{file_id}",
+                    chunk_size=6000000 
+                )
+                original_media_url = upload_result.get("secure_url")
+                print(f"[DEBUG] Cloudinary URL: {original_media_url}")
+            except Exception as e:
+                print(f"[ERROR] Cloudinary Upload Failed: {e}")
+                # Fallback to local
+                original_media_url = f"/static/uploads/videos/original/{original_filename}"
             
             # No base64 decoding needed!
             video_bytes = None 
             video_data = None
             
-        # Fallback to JSON (Legacy/Base64) - High Memory Usage
+        # Fallback to JSON (Legacy/Base64) - Legacy Support Removed for Clarity as per request
         else:
-            data = request.json
-            if not data or 'video' not in data:
-                return jsonify({"error": "No video data provided"}), 400
-                
-            print("[DEBUG] Starting video analysis (Base64 mode)...")
-            video_data = data['video']
-            if ',' in video_data:
-                video_data = video_data.split(',')[1]
-                
-            try:
-                video_bytes = base64.b64decode(video_data)
-            except Exception as e:
-                return jsonify({"error": f"Invalid base64 video data: {str(e)}"}), 400
+             return jsonify({"error": "Please upload video as a file (multipart/form-data)"}), 400
             
-            # Generate UUID
-            import uuid
-            file_id = str(uuid.uuid4())
-            
-            # Save Original Video
-            original_filename = f"{file_id}.mp4"
-            original_path = os.path.join(ORIGINAL_VIDEO_FOLDER, original_filename)
-            
-            with open(original_path, "wb") as f:
-                f.write(video_bytes)
-                
-            # FREE MEMORY
-            del video_bytes
-            del video_data
-        
-        import gc
-        gc.collect()
+
         
         print(f"[DEBUG] Video saved to {original_path}")
         
@@ -843,19 +848,27 @@ def analyze_video():
             out_writer.release()
             
         # Construct URLs
-        # Flask is usually served on 5000. Static files are at /static/...
-        # URL structure: http://localhost:5000/static/uploads/videos/original/<id>.mp4
         
-        # We return the relative path from server root. Frontend can prepend backend URL if needed,
-        # or we return full URL if we knew the host. Relative is safer for proxying.
-        # But wait, frontend `geminiService` calls backend.
-        
-        # Let's return the full static path relative to domain root
-        original_media_url = f"/static/uploads/videos/original/{original_filename}"
-        
+        # Upload Processed Video to Cloudinary (if enabled)
         processed_video_url = None
         if os.path.exists(output_path):
-             processed_video_url = f"/static/uploads/videos/processed/{processed_filename}"
+             print("[DEBUG] Uploading processed video to Cloudinary...")
+             try:
+                upload_result = cloudinary.uploader.upload_large(
+                    output_path, 
+                    resource_type="video",
+                    public_id=f"roadguard/processed/{file_id}",
+                    chunk_size=6000000 
+                )
+                processed_video_url = upload_result.get("secure_url")
+                print(f"[DEBUG] Processed Cloudinary URL: {processed_video_url}")
+             except Exception as e:
+                print(f"[ERROR] Cloudinary Processed Upload Failed: {e}")
+                processed_video_url = f"/static/uploads/videos/processed/{processed_filename}"
+
+        # Use local fallback if Cloudinary failed for original
+        if not original_media_url:
+             original_media_url = f"/static/uploads/videos/original/{original_filename}"
         
         # Auto-Routing Logic (Same as Image)
         department = 'ROADS' # Default
