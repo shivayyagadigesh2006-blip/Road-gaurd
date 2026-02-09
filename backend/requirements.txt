@@ -14,3 +14,4 @@ pymongo>=4.0.0
 pillow-heif>=0.13.0
 gunicorn
 cloudinary
+python-dotenv
