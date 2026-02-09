@@ -670,13 +670,38 @@ def analyze_video():
         processed_filename = f"{file_id}_processed.mp4"
         output_path = os.path.join(PROCESSED_VIDEO_FOLDER, processed_filename)
         
-        # Try avc1 (H.264) for browser compatibility, fallback to mp4v
-        fourcc = cv2.VideoWriter_fourcc(*'avc1') 
-        out_writer = None
-        
-        # Initial frame size check - SAFELY outside try block
+        # Frame size from capture
         frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        
+        # Try to initialize VideoWriter with multiple codecs
+        # Render/Linux often lacks h264 hardware support, so we prioritize software-friendly codecs
+        codecs_to_try = [
+            ('mp4v', 'mp4'),  # Most compatible software codec
+            ('avc1', 'mp4'),  # H.264 (might fail without openh264)
+            ('h264', 'mp4'),  # Alternative H.264
+            ('XVID', 'avi')   # Fallback AVI
+        ]
+        
+        out_writer = None
+        used_codec = None
+        
+        for codec, ext in codecs_to_try:
+            try:
+                fourcc = cv2.VideoWriter_fourcc(*codec)
+                temp_out = cv2.VideoWriter(output_path, fourcc, fps, (frame_width, frame_height))
+                if temp_out.isOpened():
+                    out_writer = temp_out
+                    used_codec = codec
+                    print(f"[INFO] Successfully initialized VideoWriter with codec: {codec}")
+                    break
+            except Exception as e:
+                print(f"[WARN] Failed to init codec {codec}: {e}")
+
+        if not out_writer or not out_writer.isOpened():
+            print("[ERROR] Could not initialize any VideoWriter codec.")
+            cap.release()
+            return jsonify({"error": "Server failed to process video (Codec Error)"}), 500
         
         try:
             # Output FPS
