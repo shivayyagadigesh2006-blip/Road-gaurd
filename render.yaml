@@ -22,6 +22,8 @@ services:
         value: 362856752694853
       - key: CLOUDINARY_API_SECRET
         value: GLLqZM15ElyVi-jxWpJe58_mtbE
+      - key: CLOUDINARY_URL
+        value: cloudinary://362856752694853:GLLqZM15ElyVi-jxWpJe58_mtbE@dwdnw9hc0
     disk:
       name: roadguard-uploads
       mountPath: /opt/render/project/src/backend/static/uploads
