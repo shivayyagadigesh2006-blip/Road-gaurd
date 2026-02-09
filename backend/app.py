@@ -744,6 +744,16 @@ def analyze_video():
         
         frame_skip = 5  # Process every 5th frame to speed up
         
+        # OOM Fix: Resize frames for processing (keep aspect ratio)
+        import math
+        process_width = 640
+        process_height = 640
+        scale = 1.0
+        if frame_width > process_width or frame_height > process_height:
+             scale = min(process_width / frame_width, process_height / frame_height)
+             process_width = int(frame_width * scale)
+             process_height = int(frame_height * scale)
+        
         while cap.isOpened():
             ret, frame = cap.read()
             if not ret:
@@ -751,17 +761,22 @@ def analyze_video():
             
             # Process only every Nth frame
             if frame_count % frame_skip == 0:
-                # Convert to RGB for consistently with image analysis & preprocessing
-                frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                # Resize for AI (Memory Optimization)
+                if scale < 1.0:
+                    small_frame = cv2.resize(frame, (process_width, process_height))
+                else:
+                    small_frame = frame
+                    
+                # Convert to RGB
+                frame_rgb = cv2.cvtColor(small_frame, cv2.COLOR_BGR2RGB)
                 
-                # Enhance for AI "Vision"
+                # Enhance
                 enhanced_frame = preprocess_image(frame_rgb)
                 
-                # Predict (using enhanced RGB image)
-                # Conf 0.10 for maximum sensitivity
+                # Predict (Lower resolution = Less RAM)
                 results = model.predict(enhanced_frame, conf=0.10, verbose=False)
                 
-                # Draw detections on ORIGINAL frame (to keep colors/quality)
+                # Draw detections on ORIGINAL frame (Rescale coords back)
                 if len(results) > 0 and results[0].boxes is not None:
                     boxes = results[0].boxes
                     frame_boxes = []
@@ -769,6 +784,10 @@ def analyze_video():
                     for box in boxes:
                         # Get coords
                         x1, y1, x2, y2 = box.xyxy[0].cpu().numpy()
+                        
+                        # Rescale to original size
+                        if scale < 1.0:
+                             x1, y1, x2, y2 = x1/scale, y1/scale, x2/scale, y2/scale
                         
                         # Draw box
                         cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), (0, 0, 255), 2)
@@ -778,11 +797,10 @@ def analyze_video():
                         class_name = model.names[cls_id] if hasattr(model, 'names') else str(cls_id)
                         conf = float(box.conf[0].item())
                         
-                        # Aggregate for report
                         damage_label = class_name.capitalize()
                         video_damage_types.add(damage_label)
                         
-                        # Calculate area for severity
+                        # Area logic
                         bbox_area = (x2 - x1) * (y2 - y1)
                         total_area = frame_width * frame_height
                         area_ratio = bbox_area / total_area if total_area > 0 else 0
@@ -791,12 +809,11 @@ def analyze_video():
                         max_video_severity = max(max_video_severity, severity)
                         
                         frame_boxes.append({
-                            "box": [float(y1), float(x1), float(y2), float(x2)], # Same as image: ymin, xmin, ymax, xmax
+                            "box": [float(y1), float(x1), float(y2), float(x2)],
                             "label": damage_label,
                             "confidence": conf
                         })
                         
-                        # Draw label
                         label = f"{damage_label} {conf:.2f}"
                         cv2.putText(frame, label, (int(x1), int(max(0, y1-10))), 
                                   cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
@@ -806,11 +823,17 @@ def analyze_video():
                             "timestamp": frame_count / fps,
                             "boxes": frame_boxes
                         })
-
+                
+                # Explicitly delete temporary AI frames
+                del frame_rgb
+                del enhanced_frame
+                # del results # model.predict results might be needed? No, logic above uses it.
+                
             if out_writer:
                 out_writer.write(frame)
                         
-            if frame_count % 30 == 0:
+            # OOM Fix: Force GC every 15 frames
+            if frame_count % 15 == 0:
                 gc.collect()
 
             frame_count += 1
