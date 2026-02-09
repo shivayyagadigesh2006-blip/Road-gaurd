@@ -211,7 +211,18 @@ const App: React.FC = () => {
 
           let mediaUrl = base64Data;
           if (analysis.originalMediaUrl) {
-              const rawBackendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+              const envUrl = import.meta.env.VITE_BACKEND_URL;
+              let rawBackendUrl = envUrl;
+              
+              if (!rawBackendUrl) {
+                  // Smart fallback if env var is missing
+                  if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+                      rawBackendUrl = 'https://road-gaurd.onrender.com';
+                  } else {
+                      rawBackendUrl = 'http://localhost:5000';
+                  }
+              }
+
               const backendUrl = rawBackendUrl.replace(/\/$/, ''); // Remove trailing slash
               
               console.log("[DEBUG] Processing Video URL. Backend:", backendUrl);

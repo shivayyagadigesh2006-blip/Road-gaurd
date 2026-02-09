@@ -1,7 +1,20 @@
 
 import { RoadAnalysis } from "../types";
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+// Smart Backend URL determination
+const getBackendUrl = () => {
+    const envUrl = import.meta.env.VITE_BACKEND_URL;
+    if (envUrl) return envUrl;
+    
+    // Fallback if env var is missing but we are likely in production (not localhost)
+    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+        return 'https://road-gaurd.onrender.com'; // Hardcoded production fallback
+    }
+    
+    return 'http://localhost:5000';
+};
+
+const BACKEND_URL = getBackendUrl();
 
 export class RoadAnalysisService {
   private backendUrl: string;

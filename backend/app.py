@@ -20,7 +20,8 @@ warnings.filterwarnings('ignore')
 app = Flask(__name__, static_folder='static', static_url_path='/static')
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024 # 100MB Limit
 database.init_db()
-CORS(app)
+# Enable CORS for all domains on all routes
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Explicitly serve static files for Render/Gunicorn
 from flask import send_from_directory
