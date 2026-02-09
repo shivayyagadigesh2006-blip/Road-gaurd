@@ -14,3 +14,7 @@ services:
         value: 2
       - key: WEB_CONCURRENCY
         value: 1
+    disk:
+      name: roadguard-uploads
+      mountPath: /opt/render/project/src/backend/static/uploads
+      sizeGB: 1
