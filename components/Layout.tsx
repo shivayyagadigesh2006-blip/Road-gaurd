@@ -101,44 +101,54 @@ const Layout: React.FC<LayoutProps> = ({ user, onLogout, onNavigate, onSwitchPor
             </div>
           </div>
 
-          {/* Right Emblem */}
+          {/* Right Emblem & User Menu */}
           <div className="hidden md:flex items-center space-x-4">
-             <div className="text-right hidden lg:block">
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">State Govt</p>
-             </div>
-             <img 
-               src="/assets/maharashtra_logo.jpg" 
-               alt="Maharashtra Government Emblem" 
-               className="h-16 w-auto opacity-90"
-             />
+             {user ? (
+                <div className="flex items-center cursor-pointer hover:bg-gray-50 px-4 py-2 rounded-lg transition-colors border border-transparent hover:border-gray-200" onClick={() => setShowPortalMenu(!showPortalMenu)}>
+                    <div className="text-right mr-3">
+                        <p className="text-sm font-bold text-gray-800 leading-none">{user.username}</p>
+                        <p className="text-[10px] text-gray-500 font-medium uppercase tracking-wide">{user.role}</p>
+                    </div>
+                    <div className="w-10 h-10 bg-blue-50 text-[#1E3A8A] rounded-full flex items-center justify-center text-lg shadow-sm border border-blue-100">
+                        <i className="fas fa-user"></i>
+                    </div>
+                    <i className={`fas fa-chevron-down ml-2 text-gray-400 text-xs transition-transform ${showPortalMenu ? 'rotate-180' : ''}`}></i>
+                </div>
+             ) : (
+                 <div className="flex items-center space-x-4">
+                     <div className="text-right hidden lg:block">
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">State Govt</p>
+                     </div>
+                     <img 
+                       src="/assets/maharashtra_logo.jpg" 
+                       alt="Maharashtra Government Emblem" 
+                       className="h-16 w-auto opacity-90"
+                     />
+                 </div>
+             )}
           </div>
         </div>
 
-        {/* Blue Navigation Strip */}
-        <div className="bg-[#1C5D9F] text-white shadow-md">
-           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="flex items-center h-12 space-x-1 md:space-x-8 text-[13px] font-bold tracking-wide uppercase">
-                 <a href="#home" onClick={(e) => handleNavClick('home', e)} className="hover:bg-blue-700 px-4 py-3 transition-colors whitespace-nowrap">Home</a>
-                 <a href="#about" onClick={(e) => handleNavClick('about', e)} className="hover:bg-blue-700 px-4 py-3 transition-colors whitespace-nowrap">{t.aboutUs}</a>
-                 <a href="#services" onClick={(e) => handleNavClick('services', e)} className="hover:bg-blue-700 px-4 py-3 transition-colors whitespace-nowrap">{t.servicesTitle}</a>
-                 <a href="#contact" onClick={(e) => handleNavClick('contact', e)} className="hover:bg-blue-700 px-4 py-3 transition-colors whitespace-nowrap">{t.contactUs}</a>
-                 
-                 <div className="flex-grow"></div>
-                 
-                 {/* Login/User Section in Nav Bar */}
-                 {user ? (
-                    <div className="flex items-center cursor-pointer hover:bg-blue-700 px-4 py-3" onClick={() => setShowPortalMenu(!showPortalMenu)}>
-                       <i className="fas fa-user-circle mr-2 text-lg"></i>
-                       <span>{user.username}</span>
-                    </div>
-                 ) : (
+        {/* Blue Navigation Strip - Hide if Logged In */}
+        {!user && (
+          <div className="bg-[#1C5D9F] text-white shadow-md">
+             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex items-center h-12 space-x-1 md:space-x-8 text-[13px] font-bold tracking-wide uppercase">
+                   <a href="#home" onClick={(e) => handleNavClick('home', e)} className="hover:bg-blue-700 px-4 py-3 transition-colors whitespace-nowrap">Home</a>
+                   <a href="#about" onClick={(e) => handleNavClick('about', e)} className="hover:bg-blue-700 px-4 py-3 transition-colors whitespace-nowrap">{t.aboutUs}</a>
+                   <a href="#services" onClick={(e) => handleNavClick('services', e)} className="hover:bg-blue-700 px-4 py-3 transition-colors whitespace-nowrap">{t.servicesTitle}</a>
+                   <a href="#contact" onClick={(e) => handleNavClick('contact', e)} className="hover:bg-blue-700 px-4 py-3 transition-colors whitespace-nowrap">{t.contactUs}</a>
+                   
+                   <div className="flex-grow"></div>
+                   
+                   {/* Login/User Section in Nav Bar (Public Only) */}
                     <div className="hidden md:block italic text-blue-200 normal-case font-medium text-xs">
                        {t.officialPortal}
                     </div>
-                 )}
-              </div>
-           </div>
-        </div>
+                </div>
+             </div>
+          </div>
+        )}
 
         {/* Dropdown Menu (Moved relative position handled by fixed/absolute but logic remains in App or here) */}
         {user && showPortalMenu && (
