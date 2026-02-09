@@ -592,8 +592,13 @@ PROCESSED_VIDEO_FOLDER = os.path.join(VIDEO_UPLOAD_FOLDER, 'processed')
 for folder in [ORIGINAL_VIDEO_FOLDER, PROCESSED_VIDEO_FOLDER]:
     os.makedirs(folder, exist_ok=True)
 
-@app.route('/analyze/video', methods=['POST'])
+from flask_cors import CORS, cross_origin
+
+@app.route('/analyze/video', methods=['POST', 'OPTIONS'])
+@cross_origin()
 def analyze_video():
+    if request.method == 'OPTIONS':
+        return jsonify({'status': 'ok'}), 200
     """
     Video analysis endpoint
     Processes video frames to detect road damage
