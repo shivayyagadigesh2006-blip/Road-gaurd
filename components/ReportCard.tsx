@@ -281,10 +281,14 @@ const ReportCard: React.FC<ReportCardProps> = ({ report, userRole, onStatusUpdat
                                     muted
                                     playsInline
                                     loop
+                                    crossOrigin="anonymous"
                                     type="video/mp4"
                                     onMouseOver={(e) => (e.target as HTMLVideoElement).play().catch(e => console.error("Play error:", e))}
                                     onMouseOut={(e) => (e.target as HTMLVideoElement).pause()}
-                                    onError={(e) => console.error("Video Load Error:", e.currentTarget.error, currentMedia)}
+                                    onError={(e) => {
+                                        console.error("Video Load Error:", e.currentTarget.error, currentMedia);
+                                        // Optional: fallback logic or user notification
+                                    }}
                                 />
                                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none group-hover:opacity-0 transition-opacity">
                                     <div className="w-12 h-12 bg-black/30 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/50">

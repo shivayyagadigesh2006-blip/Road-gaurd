@@ -211,10 +211,17 @@ const App: React.FC = () => {
 
           let mediaUrl = base64Data;
           if (analysis.originalMediaUrl) {
-              const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+              const rawBackendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+              const backendUrl = rawBackendUrl.replace(/\/$/, ''); // Remove trailing slash
+              
+              console.log("[DEBUG] Processing Video URL. Backend:", backendUrl);
+              console.log("[DEBUG] Received Original URL:", analysis.originalMediaUrl);
+              
               mediaUrl = analysis.originalMediaUrl.startsWith('/') 
                   ? `${backendUrl}${analysis.originalMediaUrl}` 
                   : analysis.originalMediaUrl;
+              
+              console.log("[DEBUG] Final Media URL:", mediaUrl);
               
               if (analysis.processedMediaUrl && analysis.processedMediaUrl.startsWith('/')) {
                   analysis.processedMediaUrl = `${backendUrl}${analysis.processedMediaUrl}`;

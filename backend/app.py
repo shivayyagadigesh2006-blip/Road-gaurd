@@ -27,7 +27,9 @@ from flask import send_from_directory
 @app.route('/static/<path:path>')
 def send_static(path):
     print(f"[DEBUG] Serving static file: {path}")
-    return send_from_directory('static', path)
+    response = send_from_directory('static', path)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 import logging
 logging.basicConfig(filename='backend_error.log', level=logging.DEBUG, 
