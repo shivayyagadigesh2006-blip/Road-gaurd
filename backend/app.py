@@ -652,11 +652,12 @@ def analyze_video():
             # --- CLOUDINARY UPLOAD ---
             print("[DEBUG] Uploading to Cloudinary...")
             try:
-                upload_result = cloudinary.uploader.upload_large(
+                # Explicitly pass config to upload to be safe
+                # Use standard upload instead of upload_large to avoid S3 403 errors
+                upload_result = cloudinary.uploader.upload(
                     original_path, 
                     resource_type="video",
-                    public_id=f"roadguard/original/{file_id}",
-                    chunk_size=6000000 
+                    public_id=f"roadguard/original/{file_id}"
                 )
                 original_media_url = upload_result.get("secure_url")
                 print(f"[DEBUG] Cloudinary URL: {original_media_url}")
@@ -885,11 +886,11 @@ def analyze_video():
         if os.path.exists(output_path):
              print("[DEBUG] Uploading processed video to Cloudinary...")
              try:
-                upload_result = cloudinary.uploader.upload_large(
+                # Use standard upload for better compatibility
+                upload_result = cloudinary.uploader.upload(
                     output_path, 
                     resource_type="video",
-                    public_id=f"roadguard/processed/{file_id}",
-                    chunk_size=6000000 
+                    public_id=f"roadguard/processed/{file_id}"
                 )
                 processed_video_url = upload_result.get("secure_url")
                 print(f"[DEBUG] Processed Cloudinary URL: {processed_video_url}")
