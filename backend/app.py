@@ -1,3 +1,7 @@
+import os
+# Set YOLO config dir to /tmp to suppress warnings on Render (read-only system)
+os.environ['YOLO_CONFIG_DIR'] = '/tmp'
+
 import torch
 from dotenv import load_dotenv
 load_dotenv()
