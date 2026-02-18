@@ -758,12 +758,18 @@ def analyze_video():
         max_video_severity = 0
         video_detections = []
         
-        frame_skip = 10  # Process every 10th frame to prevent timeouts on Render
+        # OOM Fix: Dynamic Frame Skip
+        total_frames_in_video = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        if total_frames_in_video <= 0: total_frames_in_video = fps * 10 # Fallback guess
+        
+        MAX_INFERENCE_FRAMES = 20 # Hard limit for Render Free Tier (512MB RAM)
+        frame_skip = max(5, int(total_frames_in_video // MAX_INFERENCE_FRAMES))
+        print(f"[INFO] Video has ~{total_frames_in_video} frames. Processing every {frame_skip} frames (Max {MAX_INFERENCE_FRAMES} inferences).")
         
         # OOM Fix: Resize frames for processing (keep aspect ratio)
         import math
-        process_width = 640
-        process_height = 640
+        process_width = 320 # Keep small
+        process_height = 320 
         scale = 1.0
         if frame_width > process_width or frame_height > process_height:
              scale = min(process_width / frame_width, process_height / frame_height)
@@ -799,7 +805,9 @@ def analyze_video():
                 enhanced_frame = preprocess_image(frame_rgb)
                 
                 # Predict (Lower resolution = Less RAM)
-                results = model.predict(enhanced_frame, conf=0.10, verbose=False)
+                # CRITICAL Fix: torch.no_grad() prevents gradient graph accumulation
+                with torch.no_grad():
+                    results = model.predict(enhanced_frame, conf=0.10, verbose=False)
                 
                 # Draw detections on ORIGINAL frame (Rescale coords back)
                 if len(results) > 0 and results[0].boxes is not None:
@@ -849,7 +857,6 @@ def analyze_video():
                             "boxes": frame_boxes
                         })
                 
-                # Double deletion removed here
                 
             if out_writer:
                 out_writer.write(frame)
@@ -858,7 +865,6 @@ def analyze_video():
             # Since we process fewer frames (every 1 sec), we can afford to GC more often
             if frame_count % frame_skip == 0:
                 # Use safely linked delete or try/except to avoid errors if vars aren't defined
-                # But since we are inside the same if block, they should be defined.
                 try:
                     del small_frame
                     del frame_rgb
