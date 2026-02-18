@@ -860,9 +860,17 @@ def analyze_video():
             if out_writer:
                 out_writer.write(frame)
                         
-            # OOM Fix: Force GC every 15 frames
-            if frame_count % 15 == 0:
-                gc.collect()
+            # OOM Fix: Force GC immediately after heavy processing
+            # Since we process fewer frames (every 1 sec), we can afford to GC more often
+            if frame_count % frame_skip == 0:
+                del small_frame
+                del frame_rgb
+                del enhanced_frame
+                del results
+                gc.collect() 
+            
+            # Always delete the raw frame to be safe
+            del frame
 
             frame_count += 1
             
