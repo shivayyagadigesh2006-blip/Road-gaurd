@@ -603,16 +603,16 @@ import cloudinary.uploader
 import cloudinary.api
 
 # Cloudinary Config
-cloudinary_url = os.getenv('CLOUDINARY_URL')
+cloudinary_url = os.getenv('cloudinary://362856752694853:GLLqZM15ElyVi-jxWpJe58_mtbE@dwdnw9hc0')
 if cloudinary_url:
     # If CLOUDINARY_URL is provided, it auto-configures
     pass 
 else:
     # Fallback to individual keys
     cloudinary.config(
-      cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME'),
-      api_key = os.getenv('CLOUDINARY_API_KEY'),
-      api_secret = os.getenv('CLOUDINARY_API_SECRET'),
+      cloud_name = os.getenv('dwdnw9hc0'),
+      api_key = os.getenv('362856752694853'),
+      api_secret = os.getenv('GLLqZM15ElyVi-jxWpJe58_mtbE'),
       secure = True
     )
 
@@ -757,7 +757,7 @@ def analyze_video():
         max_video_severity = 0
         video_detections = []
         
-        frame_skip = 5  # Process every 5th frame to speed up
+        frame_skip = 10  # Process every 10th frame to prevent timeouts on Render
         
         # OOM Fix: Resize frames for processing (keep aspect ratio)
         import math
@@ -769,7 +769,16 @@ def analyze_video():
              process_width = int(frame_width * scale)
              process_height = int(frame_height * scale)
         
+        import time
+        start_time = time.time()
+        timeout_seconds = 100 # Stop processing before Render timeout (120s)
+
         while cap.isOpened():
+            # Check for timeout
+            if time.time() - start_time > timeout_seconds:
+                print(f"[WARN] Video processing timed out after {timeout_seconds}s. Stopping analysis.")
+                break
+
             ret, frame = cap.read()
             if not ret:
                 break
