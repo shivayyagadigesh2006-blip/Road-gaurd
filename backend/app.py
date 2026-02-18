@@ -607,16 +607,16 @@ import cloudinary.uploader
 import cloudinary.api
 
 # Cloudinary Config
-cloudinary_url = os.getenv('cloudinary://362856752694853:GLLqZM15ElyVi-jxWpJe58_mtbE@dwdnw9hc0')
+cloudinary_url = os.getenv('CLOUDINARY_URL')
 if cloudinary_url:
     # If CLOUDINARY_URL is provided, it auto-configures
     pass 
 else:
     # Fallback to individual keys
     cloudinary.config(
-      cloud_name = os.getenv('dwdnw9hc0'),
-      api_key = os.getenv('362856752694853'),
-      api_secret = os.getenv('GLLqZM15ElyVi-jxWpJe58_mtbE'),
+      cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME'),
+      api_key = os.getenv('CLOUDINARY_API_KEY'),
+      api_secret = os.getenv('CLOUDINARY_API_SECRET'),
       secure = True
     )
 
@@ -737,7 +737,7 @@ def analyze_video():
             # some browsers might not play it natively (they often can play mp4v in .mp4 container though).
             # OR we try avc1 inside a broad try/catch to avoid crashing the thread.
             
-            codecs_to_try = ['avc1', 'mp4v', 'h264']
+            codecs_to_try = ['mp4v', 'avc1', 'h264']
             
             for codec in codecs_to_try:
                 try:
@@ -847,16 +847,13 @@ def analyze_video():
                         cv2.putText(frame, label, (int(x1), int(max(0, y1-10))), 
                                   cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 2)
                                   
-                    if frame_boxes:
+                if frame_boxes:
                         video_detections.append({
                             "timestamp": frame_count / fps,
                             "boxes": frame_boxes
                         })
                 
-                # Explicitly delete temporary AI frames
-                del frame_rgb
-                del enhanced_frame
-                # del results # model.predict results might be needed? No, logic above uses it.
+                # Double deletion removed here
                 
             if out_writer:
                 out_writer.write(frame)
@@ -864,10 +861,15 @@ def analyze_video():
             # OOM Fix: Force GC immediately after heavy processing
             # Since we process fewer frames (every 1 sec), we can afford to GC more often
             if frame_count % frame_skip == 0:
-                del small_frame
-                del frame_rgb
-                del enhanced_frame
-                del results
+                # Use safely linked delete or try/except to avoid errors if vars aren't defined
+                # But since we are inside the same if block, they should be defined.
+                try:
+                    del small_frame
+                    del frame_rgb
+                    del enhanced_frame
+                    del results
+                except UnboundLocalError:
+                    pass
                 gc.collect() 
             
             # Always delete the raw frame to be safe
