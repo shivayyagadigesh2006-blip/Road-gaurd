@@ -606,19 +606,15 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-# Cloudinary Config
-cloudinary_url = os.getenv('CLOUDINARY_URL')
-if cloudinary_url:
-    # If CLOUDINARY_URL is provided, it auto-configures
-    pass 
-else:
-    # Fallback to individual keys
-    cloudinary.config(
-      cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME'),
-      api_key = os.getenv('CLOUDINARY_API_KEY'),
-      api_secret = os.getenv('CLOUDINARY_API_SECRET'),
-      secure = True
-    )
+# Cloudinary Config - Force Explicit Configuration
+# We ignore CLOUDINARY_URL to avoid conflicts and ensure keys are usage
+cloudinary.config(
+    cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME'),
+    api_key = os.getenv('CLOUDINARY_API_KEY'),
+    api_secret = os.getenv('CLOUDINARY_API_SECRET'),
+    secure = True
+)
+print(f"[INFO] Cloudinary Configured. Cloud: {os.getenv('CLOUDINARY_CLOUD_NAME')}")
 
 @app.route('/analyze/video', methods=['POST', 'OPTIONS'])
 @cross_origin()
