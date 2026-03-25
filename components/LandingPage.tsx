@@ -57,16 +57,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted, onLogin, onWard
                EN
             </button>
             <button
-               onClick={() => setLanguage('hi')}
-               className={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${language === 'hi' ? 'bg-[#EA580C] text-white' : 'text-gray-500 hover:bg-gray-100'}`}
+               onClick={() => setLanguage('kn')}
+               className={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${language === 'kn' ? 'bg-[#EA580C] text-white' : 'text-gray-500 hover:bg-gray-100'}`}
             >
-               HI
-            </button>
-            <button
-               onClick={() => setLanguage('mr')}
-               className={`px-3 py-1 rounded-full text-xs font-bold transition-colors ${language === 'mr' ? 'bg-green-600 text-white' : 'text-gray-500 hover:bg-gray-100'}`}
-            >
-               MR
+               ಕನ್ನಡ
             </button>
          </div>
 

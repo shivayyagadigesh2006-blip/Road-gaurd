@@ -120,8 +120,8 @@ const Layout: React.FC<LayoutProps> = ({ user, onLogout, onNavigate, onSwitchPor
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">State Govt</p>
                      </div>
                      <img 
-                       src="/assets/maharashtra_logo.jpg" 
-                       alt="Maharashtra Government Emblem" 
+                       src="/assets/karnataka_logo.jpg" 
+                       alt="Karnataka Government Emblem" 
                        className="h-16 w-auto opacity-90"
                      />
                  </div>

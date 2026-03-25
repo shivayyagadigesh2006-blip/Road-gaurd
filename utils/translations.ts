@@ -1,4 +1,4 @@
-export type Language = 'en' | 'hi' | 'mr';
+export type Language = 'en' | 'kn';
 
 export const translations = {
     en: {
@@ -6,7 +6,7 @@ export const translations = {
         heroTitle: "Intelligent Road Condition Monitoring",
         heroSubtitle: "Empowering citizens and authorities to create safer, smarter infrastructure through AI-driven reporting.",
         citizenLogin: "Citizen Login",
-        deptLogin: "National Highway Authority",
+        deptLogin: "Corporation Login",
         wardLogin: "Municipal Corporation",
         contractorPortal: "Contractor Portal",
 
@@ -75,152 +75,78 @@ export const translations = {
         govtAssuranceTitle: "Government Assurance",
         govtAssuranceDesc: "Every report submitted contributes to the national infrastructure database. Action is taken based on automated severity assessment and resource allocation protocols."
     },
-    hi: {
+    kn: {
         // Landing
-        heroTitle: "बुद्धिमान सड़क स्थिति निगरानी",
-        heroSubtitle: "एआई-संचालित रिपोर्टिंग के माध्यम से सुरक्षित और स्मार्ट बुनियादी ढांचा बनाने के लिए नागरिकों और अधिकारियों को सशक्त बनाना।",
-        citizenLogin: "नागरिक लॉगिन",
-        deptLogin: "राष्ट्रीय राजमार्ग प्राधिकरण",
-        wardLogin: "नगर निगम",
-        contractorPortal: "ठेकेदार पोर्टल",
+        heroTitle: "ಬುದ್ಧಿವಂತ ರಸ್ತೆ ಸ್ಥಿತಿ ಮೇಲ್ವಿಚಾರಣೆ",
+        heroSubtitle: "ಎಐ-ಆಧಾರಿತ ವರದಿಗಳ ಮೂಲಕ ಸುರಕ್ಷಿತ ಮತ್ತು ಸ್ಮಾರ್ಟ್ ಮೂಲಸೌಕರ್ಯವನ್ನು ರಚಿಸಲು ನಾಗರಿಕರು ಮತ್ತು ಅಧಿಕಾರಿಗಳಿಗೆ ಅಧಿಕಾರ ನೀಡುವುದು.",
+        citizenLogin: "ನಾಗರಿಕ ಲಾಗಿನ್",
+        deptLogin: "ಕಾರ್ಪೊರೇಷನ್ ಲಾಗಿನ್",
+        wardLogin: "ಮಹಾನಗರ ಪಾಲಿಕೆ",
+        contractorPortal: "ಗುತ್ತಿಗೆದಾರರ ಪೋರ್ಟಲ್",
 
         // Stats
-        statTotal: "कुल रिपोर्ट",
-        statFixed: "मरम्मत पूर्ण",
-        statActive: "सक्रिय विभाग",
-        statPending: "लंबित कार्रवाई",
+        statTotal: "ಒಟ್ಟು ವರದಿಗಳು",
+        statFixed: "ದುರಸ್ತಿ ಪೂರ್ಣಗೊಂಡಿದೆ",
+        statActive: "ಸಕ್ರಿಯ ಇಲಾಖೆಗಳು",
+        statPending: "ಬಾಕಿ ಉಳಿದಿರುವ ಕ್ರಮಗಳು",
 
         // Portal Cards
-        cardCitizenTitle: "नागरिक ऐप",
-        cardCitizenDesc: "सड़क दोषों की रिपोर्ट करें, स्थिति ट्रैक करें, और एआई विश्लेषण देखें।",
-        cardDeptTitle: "विभाग पोर्टल",
-        cardDeptDesc: "क्षेत्राधिकार की देखरेख करें, पर्यवेक्षकों को नियुक्त करें, और डेटा का विश्लेषण करें।",
-        cardWardTitle: "वार्ड संचालन",
-        cardWardDesc: "स्थानीय मरम्मत का प्रबंधन करें, ठेकेदार के काम को सत्यापित करें, और स्थिति अपडेट करें।",
+        cardCitizenTitle: "ನಾಗರಿಕ ಅಪ್ಲಿಕೇಶನ್",
+        cardCitizenDesc: "ರಸ್ತೆ ದೋಷಗಳನ್ನು ವರದಿ ಮಾಡಿ, ಸ್ಥಿತಿಯನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ ಮತ್ತು ಎಐ ವಿಶ್ಲೇಷಣೆಯನ್ನು ವೀಕ್ಷಿಸಿ.",
+        cardDeptTitle: "ಇಲಾಖಾ ಪೋರ್ಟಲ್",
+        cardDeptDesc: "ಅಧಿಕಾರ ವ್ಯಾಪ್ತಿಯನ್ನು ಮೇಲ್ವಿಚಾರಣೆ ಮಾಡಿ, ಮೇಲ್ವಿಚಾರಕರನ್ನು ನಿಯೋಜಿಸಿ ಮತ್ತು ಡೇಟಾವನ್ನು ವಿಶ್ಲೇಷಿಸಿ.",
+        cardWardTitle: "ವಾರ್ಡ್ ಕಾರ್ಯಾಚರಣೆಗಳು",
+        cardWardDesc: "ಸ್ಥಳೀಯ ದುರಸ್ತಿಗಳನ್ನು ನಿರ್ವಹಿಸಿ, ಗುತ್ತಿಗೆದಾರರ ಕೆಲಸವನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಸ್ಥಿತಿಯನ್ನು ನವೀಕರಿಸಿ.",
 
         // Actions
-        btnEnter: "पोर्टल में प्रवेश करें",
-        btnLogin: "लॉग इन करें",
-        btnUpload: "रिपोर्ट जमा करें",
+        btnEnter: "ಪೋರ್ಟಲ್ ಪ್ರವೇಶಿಸಿ",
+        btnLogin: "ಲಾಗಿನ್",
+        btnUpload: "ವರದಿ ಸಲ್ಲಿಸಿ",
 
         // Labels
-        language: "भाषा",
+        language: "ಭಾಷೆ",
 
         // Header & Footer
-        govtName: "कर्नाटक सरकार",
-        corpName: "दावणगेरे महानगर पालिके",
-        skipContent: "मुख्य सामग्री पर जाएं",
-        screenReader: "स्क्रीन रीडर एक्सेस",
-        officialPortal: "दावणगेरे महानगर पालिके आधिकारिक पोर्टल",
-
-        // Footer Columns
-        infoRelated: "संबंधित जानकारी",
-        aboutCorp: "निगम के बारे में",
-        helpSupport: "सहायता और समर्थन",
-        contactAddr: "संपर्क पता",
-        managedBy: "वेबसाइट सामग्री द्वारा प्रबंधित",
-        rightsReserved: "सर्वाधिकार सुरक्षित।",
-        designedBy: "RoadGuard द्वारा डिज़ाइन किया गया।",
-
-        // Footer Links
-        roadSafety: "सड़क सुरक्षा",
-        tollInfo: "टोल जानकारी",
-        highwayProjects: "राजमार्ग परियोजनाएं",
-        notifications: "सूचनाएं",
-        aboutUs: "हमारे बारे में",
-        ourMission: "हमारा मिशन",
-        actsRules: "अधिनियम और नियम",
-        mediaCoverage: "मीडिया कवरेज",
-        contactUs: "संपर्क करें",
-        feedback: "प्रतिक्रिया",
-        grievances: "शिकायतें",
-        sitemap: "साइटमैप",
-
-        // Services Section
-        servicesTitle: "नागरिक सेवाएं",
-        service1Title: "कैप्चर और अपलोड",
-        service1Desc: "सड़क दोषों की छवियों या वीडियो को आसानी से अपलोड करें। हमारी प्रणाली स्वचालित रूप से जियोटैग करती है और गंभीरता को वर्गीकृत करती है।",
-        service2Title: "एआई निदान",
-        service2Desc: "उन्नत एल्गोरिदम मरम्मत आवश्यकताओं और प्राथमिकता स्तरों को तुरंत निर्धारित करने के लिए दृश्य डेटा का विश्लेषण करते हैं।",
-        service3Title: "की गई कार्रवाई को ट्रैक करें",
-        service3Desc: "अपनी रिपोर्ट की गई समस्याओं की स्थिति पर रीयल-टाइम अपडेट प्राप्त करें और 'पहले/बाद' का दृश्य प्रमाण देखें।",
-
-        // Misc
-        govtAssuranceTitle: "सरकारी आश्वासन",
-        govtAssuranceDesc: "जमा की गई प्रत्येक रिपोर्ट राष्ट्रीय बुनियादी ढांचा डेटाबेस में योगदान करती है। स्वचालित गंभीरता मूल्यांकन और संसाधन आवंटन प्रोटोकॉल के आधार पर कार्रवाई की जाती है।"
-    },
-    mr: {
-        // Landing
-        heroTitle: "बुद्धिमान रस्ता स्थिती निरीक्षण",
-        heroSubtitle: "एआय-आधारित रिपोर्टिंगद्वारे सुरक्षित आणि स्मार्ट पायाभूत सुविधा निर्माण करण्यासाठी नागरिक आणि अधिकाऱ्यांना सक्षम करणे.",
-        citizenLogin: "नागरिक लॉगिन",
-        deptLogin: "राष्ट्रीय महामार्ग प्राधिकरण",
-        wardLogin: "महानगरपालिका",
-        contractorPortal: "कंत्राटदार पोर्टल",
-
-        // Stats
-        statTotal: "एकूण अहवाल",
-        statFixed: "दुरुस्ती पूर्ण",
-        statActive: "सक्रिय विभाग",
-        statPending: "प्रलंबित कार्यवाही",
-
-        // Portal Cards
-        cardCitizenTitle: "नागरिक ॲप",
-        cardCitizenDesc: "रस्त्याच्या खराबीचा अहवाल द्या, स्थिती ट्रॅक करा आणि एआय विश्लेषण पहा.",
-        cardDeptTitle: "विभाग पोर्टल",
-        cardDeptDesc: "अधिकारक्षेत्राची देखरेख करा, पर्यवेक्षक नियुक्त करा आणि डेटाचे विश्लेषण करा.",
-        cardWardTitle: "वार्ड ऑपरेशन्स",
-        cardWardDesc: "स्थानिक दुरुस्ती व्यवस्थापित करा, कंत्राटदाराच्या कामाची पडताळणी करा आणि स्थिती अपडेट करा.",
-
-        // Actions
-        btnEnter: "पोर्टलमध्ये प्रवेश करा",
-        btnLogin: "लॉगिन",
-        btnUpload: "अहवाल सादर करा",
-
-        // Labels
-        language: "भाषा",
-
-        // Header & Footer
-        govtName: "कर्नाटक शासन",
+        govtName: "ಕರ್ನಾಟಕ ಸರ್ಕಾರ",
         corpName: "ದಾವಣಗೆರೆ ಮಹಾನಗರ ಪಾಲಿಕೆ",
-        skipContent: "मुख्य सामग्रीकडे जा",
-        screenReader: "स्क्रीन रीडर ऍक्सेस",
+        skipContent: "ಮುಖ್ಯ ವಿಷಯಕ್ಕೆ ಹೋಗಿ",
+        screenReader: "ಸ್ಕ್ರೀನ್ ರೀಡರ್ ಪ್ರವೇಶ",
         officialPortal: "ದಾವಣಗೆರೆ ಮಹಾನಗರ ಪಾಲಿಕೆ ಅಧಿಕೃತ ಪೋರ್ಟಲ್",
 
         // Footer Columns
-        infoRelated: "संबंधित माहिती",
-        aboutCorp: "महामंडळाबद्दल",
-        helpSupport: "मदत आणि समर्थन",
-        contactAddr: "संपर्क पत्ता",
-        managedBy: "संकेतस्थळ सामग्री व्यवस्थापन",
-        rightsReserved: "सर्व हक्क राखीव.",
-        designedBy: "RoadGuard द्वारे डिझाइन केलेले.",
+        infoRelated: "ಸಂಬಂಧಿಸಿದ ಮಾಹಿತಿ",
+        aboutCorp: "ಪಾಲಿಕೆ ಬಗ್ಗೆ",
+        helpSupport: "ಸಹಾಯ ಮತ್ತು ಬೆಂಬಲ",
+        contactAddr: "ಸಂಪರ್ಕ ವಿಳಾಸ",
+        managedBy: "ವೆಬ್ಸೈಟ್ ವಿಷಯ ನಿರ್ವಹಣೆ",
+        rightsReserved: "ಎಲ್ಲಾ ಹಕ್ಕುಗಳನ್ನು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ.",
+        designedBy: "RoadGuard ನಿಂದ ವಿನ್ಯಾಸಗೊಳಿಸಲಾಗಿದೆ.",
 
         // Footer Links
-        roadSafety: "रस्ता सुरक्षा",
-        tollInfo: "टोल माहिती",
-        highwayProjects: "महामार्ग प्रकल्प",
-        notifications: "सूचना",
-        aboutUs: "आमच्याबद्दल",
-        ourMission: "आमचे ध्येय",
-        actsRules: "कायदे आणि नियम",
-        mediaCoverage: "मीडिया कव्हरेज",
-        contactUs: "संपर्क करा",
-        feedback: "अभिप्राय",
-        grievances: "तक्रारी",
-        sitemap: "साइटमॅप",
+        roadSafety: "ರಸ್ತೆ ಸುರಕ್ಷತೆ",
+        tollInfo: "ಟೋಲ್ ಮಾಹಿತಿ",
+        highwayProjects: "ಹೆದ್ದಾರಿ ಯೋಜನೆಗಳು",
+        notifications: "ಅಧಿಸೂಚನೆಗಳು",
+        aboutUs: "ನಮ್ಮ ಬಗ್ಗೆ",
+        ourMission: "ನಮ್ಮ ಧ್ಯೇಯ",
+        actsRules: "ಕಾಯಿದೆಗಳು ಮತ್ತು ನಿಯಮಗಳು",
+        mediaCoverage: "ಮಾಧ್ಯಮ ಪ್ರಸಾರ",
+        contactUs: "ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ",
+        feedback: "ಪ್ರತಿಕ್ರಿಯೆ",
+        grievances: "ಕುಂದುಕೊರತೆಗಳು",
+        sitemap: "ಸೈಟ್‌ಮ್ಯಾಪ್",
 
         // Services Section
-        servicesTitle: "नागरिक सेवा",
-        service1Title: "कॅप्चर आणि अपलोड",
-        service1Desc: "रस्त्याच्या खराबीच्या प्रतिमा किंवा व्हिडिओ सहज अपलोड करा. आमची प्रणाली आपोआप जिओटॅग करते आणि गंभीरता वर्गीकृत करते.",
-        service2Title: "एआय निदान",
-        service2Desc: "प्रगत अल्गोरिदम दुरुस्ती आवश्यकता आणि प्राधान्य स्तर त्वरित निर्धारित करण्यासाठी दृश्य डेटाचे विश्लेषण करतात.",
-        service3Title: "केलेल्या कारवाईचा मागोवा घ्या",
-        service3Desc: "तुमच्या नोंदवलेल्या समस्यांच्या स्थितीवर रिअल-टाइम अपडेट मिळवा आणि 'आधी/नंतर' दृश्य पुरावे पहा.",
+        servicesTitle: "ನಾಗರಿಕ ಸೇವೆಗಳು",
+        service1Title: "ಸೆರೆಹಿಡಿಯಿರಿ ಮತ್ತು ಅಪ್ಲೋಡ್ ಮಾಡಿ",
+        service1Desc: "ರಸ್ತೆ ದೋಷಗಳ ಚಿತ್ರಗಳು ಅಥವಾ ವೀಡಿಯೊಗಳನ್ನು ಸುಲಭವಾಗಿ ಅಪ್ಲೋಡ್ ಮಾಡಿ. ನಮ್ಮ ಸಿಸ್ಟಮ್ ಸ್ವಯಂಚಾಲಿತವಾಗಿ ಜಿಯೋಟ್ಯಾಗ್ ಮಾಡುತ್ತದೆ ಮತ್ತು ತೀವ್ರತೆಯನ್ನು ವರ್ಗೀಕರಿಸುತ್ತದೆ.",
+        service2Title: "ಎಐ ರೋಗನಿರ್ಣಯ",
+        service2Desc: "ದುರಸ್ತಿ ಅಗತ್ಯತೆಗಳು ಮತ್ತು ಆದ್ಯತೆಯ ಮಟ್ಟವನ್ನು ತ್ವರಿತವಾಗಿ ನಿರ್ಧರಿಸಲು ಸುಧಾರಿತ ಅಲ್ಗಾರಿದಮ್‌ಗಳು ದೃಶ್ಯ ಡೇಟಾವನ್ನು ವಿಶ್ಲೇಷಿಸುತ್ತವೆ.",
+        service3Title: "ತೆಗೆದುಕೊಂಡ ಕ್ರಮವನ್ನು ಟ್ರ್ಯಾಕ್ ಮಾಡಿ",
+        service3Desc: "ನಿಮ್ಮ ವರದಿಯಾದ ಸಮಸ್ಯೆಗಳ ಸ್ಥಿತಿಯ ಕುರಿತು ನೈಜ-ಸಮಯದ ನವೀಕರಣಗಳನ್ನು ಸ್ವೀಕರಿಸಿ ಮತ್ತು 'ಮೊದಲು/ನಂತರ' ದೃಶ್ಯ ಪುರಾವೆಗಳನ್ನು ವೀಕ್ಷಿಸಿ.",
 
         // Misc
-        govtAssuranceTitle: "शासकीय आश्वासन",
-        govtAssuranceDesc: "सादर केलेला प्रत्येक अहवाल राष्ट्रीय पायाभूत सुविधा डेटाबेसमध्ये योगदान देतो. स्वयंचलित गंभीरता मूल्यांकन आणि संसाधन वाटप प्रोटोकॉलवर आधारित कारवाई केली जाते."
+        govtAssuranceTitle: "ಸರ್ಕಾರದ ಭರವಸೆ",
+        govtAssuranceDesc: "ಸಲ್ಲಿಸಿದ ಪ್ರತಿಯೊಂದು ವರದಿಯು ರಾಷ್ಟ್ರೀಯ ಮೂಲಸೌಕರ್ಯ ಡೇಟಾಬೇಸ್‌ಗೆ ಕೊಡುಗೆ ನೀಡುತ್ತದೆ. ಸ್ವಯಂಚಾಲಿತ ತೀವ್ರತೆಯ ಮೌಲ್ಯಮಾಪನ ಮತ್ತು ಸಂಪನ್ಮೂಲ ಹಂಚಿಕೆ ಪ್ರೋಟೋಕಾಲ್‌ಗಳ ಆಧಾರದ ಮೇಲೆ ಕ್ರಮ ತೆಗೆದುಕೊಳ್ಳಲಾಗುತ್ತದೆ."
     }
 };
