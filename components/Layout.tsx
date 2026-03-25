@@ -86,7 +86,7 @@ const Layout: React.FC<LayoutProps> = ({ user, onLogout, onNavigate, onSwitchPor
             <div className="flex-shrink-0">
               <img
                 src="/assets/logo.png"
-                alt="Solapur Municipal Corporation Emblem"
+                alt="Davanagere Mahanagara Palike Emblem"
                 className="h-20 w-auto"
                 onError={(e) => {
                   (e.target as HTMLImageElement).style.display = 'none';
@@ -95,8 +95,8 @@ const Layout: React.FC<LayoutProps> = ({ user, onLogout, onNavigate, onSwitchPor
             </div>
 
             <div className="flex flex-col justify-center">
-              <h2 className="text-xl font-bold text-[#EA580C] leading-tight">सोलापूर महानगरपालिका</h2>
-              <h1 className="text-xl md:text-2xl font-serif font-bold text-[#1E3A8A] leading-tight uppercase tracking-tight">SOLAPUR MUNICIPAL CORPORATION</h1>
+              <h2 className="text-xl font-bold text-[#EA580C] leading-tight">ದಾವಣಗೆರೆ ಮಹಾನಗರ ಪಾಲಿಕೆ</h2>
+              <h1 className="text-xl md:text-2xl font-serif font-bold text-[#1E3A8A] leading-tight uppercase tracking-tight">DAVANAGERE MAHANAGARA PALIKE</h1>
               <p className="text-xs font-semibold text-gray-500 mt-0.5">{t.govtName}</p>
             </div>
           </div>
@@ -229,9 +229,9 @@ const Layout: React.FC<LayoutProps> = ({ user, onLogout, onNavigate, onSwitchPor
             <div>
               <h4 className="font-bold text-gray-300 uppercase mb-4 text-xs tracking-wider">{t.contactAddr}</h4>
               <p className="text-gray-400 leading-relaxed">
-                Indrabhuvan,<br />
-                Railway Lines,<br />
-                Solapur - 413001
+                 Davanagere,<br />
+                 Karnataka,<br />
+                 Davanagere - 577001
               </p>
               <div className="mt-4 flex space-x-4">
                 <a href="#" className="text-gray-400 hover:text-white"><i className="fab fa-twitter"></i></a>

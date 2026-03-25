@@ -33,11 +33,11 @@ export const translations = {
         language: "Language",
 
         // Header & Footer
-        govtName: "Government of Maharashtra",
-        corpName: "Solapur Municipal Corporation",
+        govtName: "Government of Karnataka",
+        corpName: "Davanagere Mahanagara Palike",
         skipContent: "Skip to Main Content",
         screenReader: "Screen Reader Access",
-        officialPortal: "Solapur Municipal Corporation Official Portal",
+        officialPortal: "Davanagere Mahanagara Palike Official Portal",
         
         // Footer Columns
         infoRelated: "Information Related To",
@@ -107,11 +107,11 @@ export const translations = {
         language: "भाषा",
 
         // Header & Footer
-        govtName: "महाराष्ट्र सरकार",
-        corpName: "सोलापुर महानगरपालिका",
+        govtName: "कर्नाटक सरकार",
+        corpName: "दावणगेरे महानगर पालिके",
         skipContent: "मुख्य सामग्री पर जाएं",
         screenReader: "स्क्रीन रीडर एक्सेस",
-        officialPortal: "सोलापुर महानगरपालिका आधिकारिक पोर्टल",
+        officialPortal: "दावणगेरे महानगर पालिके आधिकारिक पोर्टल",
 
         // Footer Columns
         infoRelated: "संबंधित जानकारी",
@@ -181,11 +181,11 @@ export const translations = {
         language: "भाषा",
 
         // Header & Footer
-        govtName: "महाराष्ट्र शासन",
-        corpName: "सोलापूर महानगरपालिका",
+        govtName: "कर्नाटक शासन",
+        corpName: "ದಾವಣಗೆರೆ ಮಹಾನಗರ ಪಾಲಿಕೆ",
         skipContent: "मुख्य सामग्रीकडे जा",
         screenReader: "स्क्रीन रीडर ऍक्सेस",
-        officialPortal: "सोलापूर महानगरपालिका अधिकृत पोर्टल",
+        officialPortal: "ದಾವಣಗೆರೆ ಮಹಾನಗರ ಪಾಲಿಕೆ ಅಧಿಕೃತ ಪೋರ್ಟಲ್",
 
         // Footer Columns
         infoRelated: "संबंधित माहिती",

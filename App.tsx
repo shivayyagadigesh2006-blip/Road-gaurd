@@ -566,13 +566,13 @@ const App: React.FC = () => {
           <div className="w-24 h-24 mb-6">
             <img
               src="/assets/logo.png"
-              alt="Solapur Municipal Corporation Emblem"
+              alt="Davanagere Mahanagara Palike Emblem"
               className="w-full h-full object-contain opacity-80"
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
             />
           </div>
 
-          <h1 className="text-3xl font-serif font-bold text-[#1E3A8A] mb-2 text-center">Solapur Municipal Corporation</h1>
+          <h1 className="text-3xl font-serif font-bold text-[#1E3A8A] mb-2 text-center">Davanagere Mahanagara Palike</h1>
           <p className="text-sm font-semibold text-gray-500 uppercase tracking-widest mb-8">Road Condition Monitoring System</p>
 
           <div className="w-64 h-1 bg-gray-200 rounded-full overflow-hidden">
@@ -610,7 +610,7 @@ const App: React.FC = () => {
                 {loginType === 'USER' ? 'Citizen Sign In' : (loginType === 'WARD' ? 'Ward Official Login' : (loginType === 'CONTRACTOR' ? 'Contractor Login' : 'Department Login'))}
               </h2>
               <p className="text-xs text-gray-500 uppercase font-bold tracking-wide">
-                {loginType === 'USER' ? 'Solapur Municipal Corporation' : (loginType === 'WARD' ? 'Local Ward Access' : (loginType === 'CONTRACTOR' ? 'Authorized Contractor Access' : 'Official Portal Access'))}
+                {loginType === 'USER' ? 'Davanagere Mahanagara Palike' : (loginType === 'WARD' ? 'Local Ward Access' : (loginType === 'CONTRACTOR' ? 'Authorized Contractor Access' : 'Official Portal Access'))}
               </p>
             </div>
 
@@ -884,7 +884,7 @@ const App: React.FC = () => {
                         type="text"
                         value={locationAddress}
                         onChange={(e) => setLocationAddress(e.target.value)}
-                        placeholder="Enter location address (e.g. 'Near City Hall, Main Road, Solapur')"
+                        placeholder="Enter location address (e.g. 'Near City Hall, Main Road, Davanagere')"
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none text-base shadow-inner"
                       />
                       <p className="text-xs text-gray-500 mt-1">
